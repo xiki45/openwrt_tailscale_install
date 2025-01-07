@@ -71,3 +71,61 @@ ca-bundle已安装 kmod-tun我碰到的情况是openwrt的realse依赖不存在 
 `/etc/init.d/tailscale enable`
 
 `ls /etc/rc.d/S*tailscale*`
+
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>复制</title>
+  <style>
+    pre {
+      position: relative;
+      background-color: #f5f5f5;
+      padding: 10px;
+      border-radius: 5px;
+      font-family: monospace;
+    }
+    button {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+<!-- 代码块 -->
+<pre>
+  <code id="code-block">
+tar x -zvC / -f openwrt-tailscale-enabler-&lt;tag&gt;.tgz
+  </code>
+  <button onclick="copyCode()">复制代码</button>
+</pre>
+
+<!-- JavaScript 实现复制功能 -->
+<script>
+  function copyCode() {
+    const codeBlock = document.getElementById('code-block');
+    const textToCopy = codeBlock.innerText;
+
+    navigator.clipboard.writeText(textToCopy)
+      .then(() => alert('代码已复制!'))
+      .catch(() => alert('复制失败，请手动复制。'));
+  }
+</script>
+
+</body>
+</html>
+```
+
