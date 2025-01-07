@@ -70,7 +70,11 @@ ca-bundle已安装 kmod-tun我碰到的情况是openwrt的realse依赖不存在 
 
 `/etc/init.d/tailscale enable`
 
-`ls /etc/rc.d/S*tailscale*`
+```html
+ls /etc/rc.d/S*tailscale*
+```
+
+
 
 ```html
 <!DOCTYPE html>
