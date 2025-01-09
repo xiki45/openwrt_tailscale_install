@@ -104,3 +104,19 @@ ca-bundle已安装 kmod-tun我碰到的情况是openwrt的realse依赖不存在 
 ls /etc/rc.d/S*tailscale*
 ```
 
+假如/etc/rc.d下没有S99tailscale文件 运行以下命令
+
+```
+ln -s /etc/init.d/tailscale /etc/rc.d/S99tailscale
+```
+
+因为安装在tmp路径 所以重启后需要一键脚本重新启动
+
+```
+chmod +x /etc/init.d/xiaomi_tailscale_autostart.sh
+```
+
+```
+/etc/init.d/xiaomi_tailscale_autostart.sh enable
+```
+
