@@ -16,6 +16,12 @@ xiaomi_tailscale_backup_1.78.1.tgz
 
 ## openwrt上需要执行的命令
 
+首先在root路径下执行以下命令 获取realse的openwrt_tailscale_sh.tgz包
+
+```
+wget https://github.com/xiki45/openwrt_tailscale_install/releases/download/v1.0/openwrt_tailscale_sh.tgz
+```
+
 ```html
 tar -xzvf filename -C /
 ```
@@ -28,9 +34,19 @@ opkg update
 opkg install libustream-openssl ca-bundle kmod -tun
 ```
 
+kmod-tun没安装无法使用出口节点
+
 ```html
-./openwrt_tailscale_install.sh  
+./openwrt_tailscale_install.sh
 ```
+
+或者
+
+```
+sh openwrt_tailscale_install.sh
+```
+
+
 
 ```html
 /etc/init.d/tailscale start
@@ -39,6 +55,8 @@ opkg install libustream-openssl ca-bundle kmod -tun
 ```html
 tailscale up --advertise-routes=192.168.0.0/24 --accept-routes=true --accept-dns=false
 ```
+
+参数详情见下
 
 ```html
 /etc/init.d/tailscale enable
@@ -78,7 +96,15 @@ ls /etc/rc.d/S*tailscale*
 
 ## 小米路由器使用tailscale
 
-以我手上的REDMIax6000路由器为例，其tmp空间充足而overlay只有40M左右 因此可以将tailscale的二进制文件tailscale和tailscaled放在tmp文件夹下 重启后tmp目录的二进制文件会被清楚 通过自启脚本重新把二进制文件放入tmp目录并启动
+以我手上的REDMI AX6000路由器为例，其tmp空间充足而overlay只有40M左右 因此可以将tailscale的二进制文件tailscale和tailscaled放在tmp文件夹下 重启后tmp目录的二进制文件会被清楚 通过自启脚本重新把二进制文件放入tmp目录并启动
+
+arm64版本
+
+```
+wget https://gitee.com/vinye/openwrt_tailscale_install/releases/download/v1.0/xiaomi_tailscale_backup_arm64_1.78.1.tgz
+```
+
+
 
 ```
 tar -xzvf filename -C /
@@ -91,6 +117,8 @@ ca-bundle已安装 kmod-tun我碰到的情况是openwrt的realse依赖不存在 
 ```
 /etc/init.d/tailscale start
 ```
+
+因为二进制文件在tmp目录因此需要绝对路径
 
 ```
 /tmp/tailscale up --advertise-routes=192.168.0.0/24 --accept-routes=true --accept-dns=false
@@ -111,6 +139,12 @@ ln -s /etc/init.d/tailscale /etc/rc.d/S99tailscale
 ```
 
 因为安装在tmp路径 所以重启后需要一键脚本重新启动
+
+```
+wget https://gitee.com/vinye/openwrt_tailscale_install/releases/download/v1.0/xiaomi_tailscale_autostart.sh
+```
+
+
 
 ```
 chmod +x /etc/init.d/xiaomi_tailscale_autostart.sh
