@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/ash
 set -e  # 脚本出错时立即退出
 # 用户选择系统架构
 echo "请选择系统架构："
@@ -30,7 +30,20 @@ version="${latest_version}_${arch}"
 download_url="https://pkgs.tailscale.com/stable/tailscale_${version}.tgz"
 # 下载并解压到 /root 目录
 echo "Downloading Tailscale ${version}..."
-wget -qO- "$download_url" | tar -xz -C /root
+retries=3
+while [ $retries -gt 0 ]; do
+    if wget -qO- "$download_url" | tar -xz -C /root; then
+        break
+    else
+        retries=$((retries - 1))
+        echo "Download failed, retrying... ($retries retries left)"
+        sleep 5
+    fi
+done
+if [ $retries -eq 0 ]; then
+    echo "Failed to download Tailscale after multiple attempts."
+    exit 1
+fi
 # 移动二进制文件到系统目录
 mv /root/tailscale_${version}/tailscale /usr/bin/tailscale
 mv /root/tailscale_${version}/tailscaled /usr/sbin/tailscaled
