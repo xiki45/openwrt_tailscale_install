@@ -141,7 +141,7 @@ ln -s /etc/init.d/tailscale /etc/rc.d/S99tailscale
 因为安装在tmp路径 所以重启后需要一键脚本重新启动
 
 ```
-wget https://gitee.com/vinye/openwrt_tailscale_install/releases/download/v1.0/xiaomi_tailscale_autostart.sh
+wget -O /etc/init.d/xiaomi_tailscale_autostart.sh https://gitee.com/vinye/openwrt_tailscale_install/releases/download/v1.0/xiaomi_tailscale_autostart.sh
 ```
 
 
