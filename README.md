@@ -56,8 +56,6 @@ sh openwrt_tailscale_install.sh
 tailscale up --advertise-routes=192.168.0.0/24 --accept-routes=true --accept-dns=false
 ```
 
-参数详情见下
-
 ```html
 /etc/init.d/tailscale enable
 ```
@@ -98,13 +96,35 @@ ls /etc/rc.d/S*tailscale*
 
 以我手上的REDMI AX6000路由器为例，其tmp空间充足而overlay只有40M左右 因此可以将tailscale的二进制文件tailscale和tailscaled放在tmp文件夹下 重启后tmp目录的二进制文件会被清楚 通过自启脚本重新把二进制文件放入tmp目录并启动
 
+### 挂载overlayfs,这样/etc/init.d和/root才可写 将以下代码添加进auto_ssh.sh
+
+```
+#Mount overlay
+[ -e /data/overlay ] || mkdir /data/overlay
+[ -e /data/overlay/upper ] || mkdir /data/overlay/upper
+[ -e /data/overlay/work ] || mkdir /data/overlay/work
+mount --bind /data/overlay /overlay
+. /lib/functions/preinit.sh
+fopivot /overlay/upper /overlay/work /rom 1
+
+#Fixup miwifi misc, and DO NOT use /overlay/upper/etc instead, /etc/uci-defaults/* may be already removed
+/bin/mount -o noatime,move /rom/data /data 2>&-
+/bin/mount -o noatime,move /rom/etc /etc 2>&-
+/bin/mount -o noatime,move /rom/ini /ini 2>&-
+/bin/mount -o noatime,move /rom/userdisk /userdisk 2>&-
+```
+
+查看挂载是否成功
+
+```
+df -h
+```
+
 arm64版本
 
 ```
 wget https://gitee.com/vinye/openwrt_tailscale_install/releases/download/v1.0/xiaomi_tailscale_backup_arm64_1.78.1.tgz
 ```
-
-
 
 ```
 tar -xzvf filename -C /
@@ -137,20 +157,3 @@ ls /etc/rc.d/S*tailscale*
 ```
 ln -s /etc/init.d/tailscale /etc/rc.d/S99tailscale
 ```
-
-因为安装在tmp路径 所以重启后需要一键脚本重新启动
-
-```
-wget -O /etc/init.d/xiaomi_tailscale_autostart.sh https://gitee.com/vinye/openwrt_tailscale_install/releases/download/v1.0/xiaomi_tailscale_autostart.sh
-```
-
-
-
-```
-chmod +x /etc/init.d/xiaomi_tailscale_autostart.sh
-```
-
-```
-/etc/init.d/xiaomi_tailscale_autostart.sh enable
-```
-
