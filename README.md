@@ -9,7 +9,7 @@ Tailscale 是一种基于 WireGuard 协议局域网组网的现代 VPN 工具。
 脚本: `openwrt/root/openwrt_tailscale_install.sh`（解包后位于 `/root/openwrt_tailscale_install.sh`）
 
 ```sh
-wget https://github.com/xiki45/openwrt_tailscale_install/releases/download/v1.0/openwrt_tailscale_sh.tgz
+wget https://github.com/xiki45/openwrt_tailscale_install/releases/download/v1.1/openwrt_tailscale_sh.tgz
 tar -xzvf openwrt_tailscale_sh.tgz -C /
 sh /root/openwrt_tailscale_install.sh
 ```
