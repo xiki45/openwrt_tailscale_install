@@ -180,5 +180,6 @@ ln -s /etc/init.d/tailscale /etc/rc.d/S99tailscale
 
 `xiaomi/` 目录是早期的手动备份包（旧流程：手动把二进制放进 `/tmp`）与当年用到的 `libustream-openssl` ipk；
 `xiaomi/ipk/` 里的 ipk 仍可用——脚本补依赖时会先找本地 ipk，找不到才联网拉。
+旧流程的备份包仍在旧 release 里：`https://gitee.com/vinye/openwrt_tailscale_install/releases/download/v1.0/xiaomi_tailscale_backup_arm64_1.78.1.tgz`（1.78.1，含 40MB overlay 时代的 arm64 二进制，仅作留存）。
 旧流程遗留的 `/etc/init.d/tailscale`（写死 `/tmp` 路径、无开机恢复）会被脚本生成的版本覆盖，
 被覆盖前若文件不是脚本管理的，会先备份成 `/etc/init.d/tailscale.bak`。
